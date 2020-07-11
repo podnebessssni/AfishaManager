@@ -1,14 +1,24 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Afisha;
-import ru.netology.domain.AfishaManager;
+import ru.netology.repository.AfishaRepository;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 
+@ExtendWith(MockitoExtension.class)
+  public class AfishaManagerTest {
+  @Mock
+  private AfishaRepository repository;
+  @InjectMocks
+  private AfishaManager manager ;
 
-public class AfishaManagerTest {
-  AfishaManager manager = new AfishaManager(10);
   Afisha first = new Afisha(1, "http//pic1.ru", "Thor", "fantasy");
   Afisha second = new Afisha(2, "http//pic2.ru", "Armagedon", "fantasy");
   Afisha third = new Afisha(3, "http//pic3.ru", "Star wars", "fantasy");
@@ -29,8 +39,11 @@ public class AfishaManagerTest {
     manager.add(second);
     manager.add(third);
 
+    Afisha[] returned = new Afisha[]{first, second, third};
+    doReturn(returned).when(repository).findAll();
+
     Afisha[] actual = manager.showAll();
-    Afisha[] expected = new Afisha[]{third, second, first};
+    Afisha[] expected = new Afisha[]{ third, second, first};
     assertArrayEquals(expected, actual);
   }
 
@@ -51,9 +64,14 @@ public class AfishaManagerTest {
     manager.add(eleventh);
     manager.add(twelvth);
 
-    Afisha[] actual = manager.showAll();
-    Afisha[] expected = new Afisha[]{twelvth, eleventh,tenth,nineth,eight,seventh,sixth,fifth,fourth,third};
+    Afisha[] returned = new Afisha[]{first, second, third, fourth, fifth, sixth, seventh, eight, nineth,tenth};
+    doReturn(returned).when(repository).findAll();
+    doNothing().when(repository).save(eleventh);
 
+    manager.add(eleventh);
+
+    Afisha[] actual = manager.showAll();
+    Afisha[] expected = new Afisha[]{ tenth, nineth, eight, seventh, sixth, fifth, fourth, third, second, first};
     assertArrayEquals(expected, actual);
   }
   @Test
@@ -63,6 +81,12 @@ public class AfishaManagerTest {
     manager.add(second);
     manager.add(third);
 
+    Afisha[] returned = new Afisha[]{first, second, third};
+    doReturn(returned).when(repository).findAll();
+    doNothing().when(repository).save(fourth);
+
+    manager.add(fourth);
+
     Afisha[] actual = manager.showAll();
     Afisha[] expected = new Afisha[]{third, second, first};
 
@@ -71,6 +95,11 @@ public class AfishaManagerTest {
 
   @Test
   void shouldShowEmpty() {
+    Afisha[] returned = new Afisha[]{};
+    doReturn(returned).when(repository).findAll();
+    doNothing().when(repository).save(eleventh);
+
+    manager.add(eleventh);
 
     Afisha[] actual = manager.showAll();
     Afisha[] expected = new Afisha[]{};
