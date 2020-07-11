@@ -1,4 +1,6 @@
-package ru.netology.domain;
+package ru.netology.manager;
+
+import ru.netology.domain.Afisha;
 
 public class AfishaManager {
   private Afisha[] items = new Afisha[0];

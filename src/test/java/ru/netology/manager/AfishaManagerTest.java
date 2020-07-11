@@ -2,7 +2,6 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Afisha;
-import ru.netology.domain.AfishaManager;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
