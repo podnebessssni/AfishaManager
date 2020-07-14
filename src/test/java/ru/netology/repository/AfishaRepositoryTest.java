@@ -2,17 +2,17 @@ package ru.netology.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.domain.Afisha;
+import ru.netology.domain.Film;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AfishaRepositoryTest {
 
-    AfishaRepository repository = new AfishaRepository();
-    Afisha first = new Afisha(1, "http//pic1.ru", "Thor", "fantasy");
-    Afisha second = new Afisha(2, "http//pic2.ru", "Armagedon", "fantasy");
-    Afisha third = new Afisha(3, "http//pic3.ru", "Star wars", "fantasy");
+    private AfishaRepository repository = new AfishaRepository();
+    private Film first = new Film(1, "http//pic1.ru", "Thor", "fantasy");
+    private Film second = new Film(2, "http//pic2.ru", "Armagedon", "fantasy");
+    private Film third = new Film(3, "http//pic3.ru", "Star wars", "fantasy");
 
     @BeforeEach
     public void setUp() {
@@ -26,8 +26,8 @@ class AfishaRepositoryTest {
         int idToRemove = 1;
         repository.removeById(idToRemove);
 
-        Afisha[] actual = repository.findAll();
-        Afisha[] expected = new Afisha[]{ second, third,};
+        Film[] actual = repository.findAll();
+        Film[] expected = new Film[]{ second, third,};
 
         assertArrayEquals(expected, actual);
     }
@@ -42,29 +42,29 @@ class AfishaRepositoryTest {
     public void shouldRemoveAll() {
         repository.removeAll();
 
-        Afisha[] actual = repository.findAll();
-        Afisha[] expected = new Afisha[]{};
+        Film[] actual = repository.findAll();
+        Film[] expected = new Film[]{};
 
         assertArrayEquals(expected, actual);
     }
     @Test
     public void shouldShowAll() {
 
-        Afisha[] actual = repository.findAll();
-        Afisha[] expected = new Afisha[]{first, second, third};
+        Film[] actual = repository.findAll();
+        Film[] expected = new Film[]{first, second, third};
 
         assertArrayEquals(expected, actual);
     }
 
-//    @Test
-//    public void shouldNotRemoveIfNotExists() {
-//        int idToRemove = 4;
-//
-//        repository.removeById(idToRemove);
-//
-//        Afisha[] actual = repository.findAll();
-//        Afisha[] expected = new Afisha[]{third, second, first};
-//
-//        assertArrayEquals(expected, actual);
-//    }
+    @Test
+    public void shouldNotRemoveIfNotExists() {
+        int idToRemove = 4;
+
+        repository.removeById(idToRemove);
+
+        Film[] actual = repository.findAll();
+        Film[] expected = new Film[]{third, second, first};
+
+        assertArrayEquals(expected, actual);
+    }
 }
