@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Afisha {
+public class Film {
   private int id;
   private String imageUrl;
   private String movieName;
